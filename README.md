@@ -34,4 +34,4 @@ Symfony cli
    symfony serve -d
    ```
 
-Pour la moindre question, contacter moi : guerda.yacine60100@gmail.com
+Pour la moindre question, contactez moi : guerda.yacine60100@gmail.com
