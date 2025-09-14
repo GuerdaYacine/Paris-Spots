@@ -1,0 +1,104 @@
+{% extends 'base.html.twig' %}
+{% block title %}Espaces Verts{% endblock %}
+
+{% block body_class %}espaces-verts-page{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/espaces/espaces.css') }}">
+{% endblock %}
+
+{% block body %}
+    <main class="espaces-verts-section">
+        <div class="espaces-verts-header">
+            <div class="espaces-verts-icon-container">
+                <i class="fa-solid fa-tree"></i>
+            </div>
+            <div class="espaces-verts-title-section">
+                <h1>Espaces Verts</h1>
+                <p class="espaces-verts-subtitle">Découvrez les parcs et jardins de Paris</p>
+            </div>
+        </div>
+        <div class="espaces-verts-filters-section">
+            {{ form_start(form, { method: 'get', attr: { class: 'espaces-verts-filters-form' } }) }}
+                <div class="espaces-verts-search-container">
+                    <i class="fa-solid fa-search espaces-verts-search-icon"></i>
+                    <input 
+                        type="text" 
+                        name="q" 
+                        value="{{ app.request.get('q') }}" 
+                        class="espaces-verts-search-input"
+                        placeholder="Rechercher par nom, adresse, arrondissement...">
+                </div>
+
+                <div class="espaces-verts-filters-row">
+                    <div class="espaces-verts-filter-group">
+                        {{ form_label(form.arrondissement) }}
+                        {{ form_widget(form.arrondissement) }}
+                    </div>
+
+                    <button type="submit" class="espaces-verts-filter-submit">
+                        <i class="fa-solid fa-filter"></i>
+                        Rechercher
+                    </button>
+                </div>
+            {{ form_end(form) }}
+        </div>
+
+        <p class="espaces-verts-results-count">
+            <strong>{{ nombreEspaceVert }}</strong> espace{{ nombreEspaceVert > 1 ? 's' : '' }} vert{{ nombreEspaceVert > 1 ? 's' : '' }} trouvé{{ nombreEspaceVert > 1 ? 's' : '' }}
+        </p>
+
+        <div class="espaces-verts-table-container">
+            <table class="espaces-verts-table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Adresse</th>
+                        <th>Arrondissement</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if pagination|length > 0 %}
+                        {% for espace in pagination %}
+                        <tr>
+                            <td>{{ espace.nom_ev ?? 'N/A' }}</td>
+                            <td>
+                                {% set adresse = 
+                                    (espace.adresse_numero ?? '') ~ ' ' ~ 
+                                    (espace.adresse_typevoie ?? '') ~ ' ' ~ 
+                                    (espace.adresse_libellevoie ?? '') ~ ' ' ~ 
+                                    (espace.adresse_codepostal ?? '') 
+                                %}
+                                <a href="https://www.google.com/maps/search/?api=1&query={{ adresse|url_encode }}" target="_blank">
+                                    {{ adresse|trim }}
+                                    <i class="fa-solid fa-external-link" style="font-size: 0.8rem; margin-left: 0.3rem;"></i>
+                                </a>
+                            </td>
+                            <td>{{ espace.arrondissement ? espace.arrondissement ~ 'ᵉ' : 'N/A' }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="espaces-verts-empty-message">
+                                <i class="fa-solid fa-tree"></i>
+                                <p>Aucun espace vert n'a été trouvé</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination-container">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        <div class="espaces-verts-map-section">
+        <h2>Trouvez l'espace vert le plus proche</h2>
+            {{ ux_map(map, {style: 'height: 600px;'}) }}
+        </div>
+    </main>
+
+
+{% endblock %}

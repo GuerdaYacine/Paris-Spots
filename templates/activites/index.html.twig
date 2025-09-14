@@ -1,0 +1,152 @@
+{% extends 'base.html.twig' %}
+{% block title %}Activités sur Paris{% endblock %}
+
+{% block body_class %}activites-page{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/activites/activites.css') }}">
+{% endblock %}
+
+{% block body %}
+    <main class="activites-section">
+        <div class="activites-header">
+            <div class="activites-icon-container">
+                <i class="fa-solid fa-calendar-days"></i>
+            </div>
+            <div class="activites-title-section">
+                <h1>Activités à Paris</h1>
+                <p class="activites-subtitle">Découvrez les meilleures activités de la capitale</p>
+            </div>
+        </div>
+
+<div class="activites-search-section">
+    {{ form_start(form, { method: 'get', attr: { class: 'activites-filters-form' } }) }}
+        <div class="activites-search-container">
+            <i class="fa-solid fa-search activites-search-icon"></i>
+            <input 
+                type="text"
+                name="q" 
+                value="{{ app.request.get('q') }}"
+                class="activites-search-input" 
+                placeholder="Rechercher par nom, description, adresse..." 
+                id="search-input">
+        </div>
+        
+        <div class="activites-filters-row">
+            <div class="activites-filter-group">
+                {{ form_label(form.arrondissement) }}
+                {{ form_widget(form.arrondissement) }}
+            </div>
+            
+            <div class="activites-filter-group">
+                {{ form_label(form.prix) }}
+                {{ form_widget(form.prix) }}
+            </div>
+            
+            <button type="submit" class="activites-filter-submit">
+                <i class="fa-solid fa-filter"></i>
+                Rechercher
+            </button>
+        </div>
+    {{ form_end(form) }}
+</div>
+
+        <p class="activites-results-count">
+            <strong>{{ nombreActivites }}</strong> activité{{ nombreActivites > 1 ? 's' : '' }} trouvée{{ nombreActivites > 1 ? 's' : '' }}
+        </p>
+
+        <div class="activites-table-container">
+            <table class="activites-table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Description</th>
+                        <th>Date de début</th>
+                        <th>Date de fin</th>
+                        <th>Adresse</th>
+                        <th>Prix</th>
+                        <th>Arrondissement</th>
+                        <th>Lien</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if pagination|length > 0 %}
+                        {% for activite in pagination %}
+                        <tr>
+                            <td>{{ activite.title ?? 'Inconnu' }}</td>
+                            <td>{{ activite.lead_text ?? 'N/A' }}</td>
+                            <td class="activites-date-cell">
+                                {% if activite.date_start %}
+                                    {{ activite.date_start|date('d/m/Y') }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td class="activites-date-cell">
+                                {% if activite.date_end %}
+                                    {{ activite.date_end|date('d/m/Y') }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% set adresse = activite.address_street ?? 'N/A' %}
+                                {% if adresse != 'N/A' %}
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ adresse|url_encode }}" target="_blank">
+                                        {{ adresse }}
+                                        <i class="fa-solid fa-external-link" style="font-size: 0.8rem; margin-left: 0.3rem;"></i>
+                                    </a>
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if activite.price_type %}
+                                    {% if activite.price_type|lower == 'gratuit' %}
+                                        <span class="activites-price-badge activites-price-gratuit">{{ activite.price_type }}</span>
+                                    {% elseif activite.price_type|lower == 'payant' %}
+                                        <span class="activites-price-badge activites-price-payant">{{ activite.price_type }}</span>
+                                    {% else %}
+                                        <span class="activites-price-badge activites-price-unknown">{{ activite.price_type }}</span>
+                                    {% endif %}
+                                {% else %}
+                                    <span class="activites-price-badge activites-price-unknown">N/A</span>
+                                {% endif %}
+                            </td>
+                            <td>{{ activite.arrondissement ? activite.arrondissement ~ 'ᵉ' : 'N/A' }}</td>
+                            <td>
+                                {% if activite.url %}
+                                    <a href="{{ activite.url }}"  target="_blank" class="activites-external-link">
+                                        Voir l'événement
+                                        <i class="fa-solid fa-external-link"></i>
+                                    </a>
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="activites-empty-message">
+                                <i class="fa-solid fa-calendar-days"></i>
+                                <p>Aucune activité n'a été trouvée</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination-container">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        <div class="activites-map-section">
+            <h2>Découvrez les activités près de vous</h2>
+            {{ ux_map(map, {style: 'height: 600px;'}) }}
+        </div>
+    </main>
+
+{% endblock %}

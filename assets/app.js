@@ -7,4 +7,7 @@ import './bootstrap.js';
  */
 import './styles/app.css';
 
+Turbo.setProgressBarDelay(600)
+
+
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉');

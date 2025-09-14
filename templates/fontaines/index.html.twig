@@ -1,0 +1,99 @@
+{% extends 'base.html.twig' %}
+{% block title %}Fontaines à eau{% endblock %}
+
+{% block body_class %}fontaines-page{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('css/fontaines/fontaines.css') }}">
+{% endblock %}
+
+{% block body %}
+    <main class="fontaines-section">
+        <div class="fontaines-header">
+            <div class="fontaines-icon-container">
+                <i class="fa-solid fa-droplet"></i>
+            </div>
+            <div class="fontaines-title-section">
+                <h1>Fontaines à Eau</h1>
+                <p class="fontaines-subtitle">Trouvez les points d'eau gratuits de Paris</p>
+            </div>
+        </div>
+
+        <div class="fontaines-search-section">
+            {{ form_start(form, { attr: { class: 'fontaines-filters-form' } }) }}
+                
+                <div class="fontaines-filter-group">
+                    {{ form_label(form.arrondissement) }}
+                    {{ form_widget(form.arrondissement) }}
+                </div>
+                <div class="fontaines-filter-group">
+                    {{ form_label(form.disponibilite) }}
+                    {{ form_widget(form.disponibilite) }}
+                </div>
+                <button type="submit" class="fontaines-filter-submit">
+                    <i class="fa-solid fa-filter"></i>
+                    Rechercher
+                </button>
+            {{ form_end(form) }}
+        </div>
+
+        <p class="fontaines-results-count">
+            <strong>{{ nombreFontaine }}</strong> fontaine{{ nombreFontaine > 1 ? 's' : '' }} trouvée{{ nombreFontaine > 1 ? 's' : '' }}
+        </p>
+
+        <div class="fontaines-table-container">
+            <table class="fontaines-table">
+                <thead>
+                    <tr>
+                        <th>Adresse</th>
+                        <th>Arrondissement</th>
+                        <th>Disponibilité</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if pagination|length > 0 %}
+                        {% for fontaine in pagination %}
+                        <tr>
+                            <td>
+                                {% set numero = fontaine.no_voirie_pair ?? fontaine.no_voirie_impair %}
+                                {% set adresse = numero ? numero ~ ' ' ~ fontaine.voie ~ ', Paris' : fontaine.voie ~ ', Paris' %}
+                                <a href="https://www.google.com/maps/search/?api=1&query={{ adresse|url_encode }}" target="_blank">
+                                    {{ adresse }}
+                                    <i class="fa-solid fa-external-link" style="font-size: 0.8rem; margin-left: 0.3rem;"></i>
+                                </a>
+                            </td>
+                            <td>{{ fontaine.arrondissement ~ 'ᵉ' ?? 'N/A' }}</td>
+                            <td>
+                                {% if fontaine.dispo == 'OUI' %}
+                                    <span class="fontaines-status-badge fontaines-status-disponible">{{ fontaine.dispo }}</span>
+                                {% elseif fontaine.dispo == 'NON' %}
+                                    <span class="fontaines-status-badge fontaines-status-indisponible">{{ fontaine.dispo }}</span>
+                                {% else %}
+                                    <span class="fontaines-status-badge fontaines-status-unknown">{{ fontaine.dispo ?? 'N/A' }}</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                        <tr>
+                            <td colspan="3" class="fontaines-empty-message">
+                                <i class="fa-solid fa-droplet"></i>
+                                <p>Aucune fontaine n'a été trouvée</p>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination-container">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+
+        <div class="fontaines-map-section">
+            <h2>Trouvez la fontaine la plus proche</h2>
+            {{ ux_map(map, {style: 'height: 600px;'}) }}
+        </div>
+    </main>
+{% endblock %}

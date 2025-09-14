@@ -1,0 +1,141 @@
+{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/home/home.css') }}">
+{% endblock %}
+
+
+{% block body %}
+    <main class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">Découvrez <br> Paris Autrement</h1>
+            <p class="hero-description">
+                Explorez les espaces verts, trouvez les fontaines publiques et découvrez les meilleures activités de la capitale française.
+            </p>
+            <a href="#explore" class="cta-button">
+                <i class="fa-solid fa-compass"></i>
+                Commencer l'Exploration
+            </a>
+        </div>
+    </main>
+
+    <section class="categories-section" id="explore">
+        <div class="container">
+            <h2 class="categories-title">Tout Paris à Portée de Clic</h2>
+            <p class="categories-subtitle">
+                Trois catégories essentielles pour vous aider à profiter pleinement de votre séjour ou de votre vie parisienne.
+            </p>
+            
+            <div class="categories-grid">
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="{{ asset('images/espace.jpg') }}" alt="Espaces Verts" />
+                    </div>
+                    <div class="category-content">
+                        <div class="category-header">
+                            <div class="category-icon green">
+                                <i class="fa-solid fa-tree"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3 class="category-name">Espaces Verts</h3>
+                                <p class="category-count">400+ parcs</p>
+                            </div>
+                        </div>
+                        <p class="category-description">
+                            Découvrez les parcs, jardins et espaces naturels de Paris pour vous ressourcer en plein cœur de la ville.
+                        </p>
+                        <a href="{{ path('app_espaces_verts') }}" class="discover-button green">
+                            Découvrir
+                        </a>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="{{ asset('images/fontaine.jpg') }}" alt="Fontaines" />
+                    </div>
+                    <div class="category-content">
+                        <div class="category-header">
+                            <div class="category-icon blue">
+                                <i class="fa-solid fa-droplet"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3 class="category-name">Fontaines</h3>
+                                <p class="category-count">200+ points d'eau</p>
+                            </div>
+                        </div>
+                        <p class="category-description">
+                            Trouvez facilement les fontaines publiques pour vous désaltérer lors de vos balades parisiennes.
+                        </p>
+                        <a href="{{ path('app_fontaines') }}" class="discover-button blue">
+                            Découvrir
+                        </a>
+                    </div>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-image">
+                        <img src="{{ asset('images/activite.jpg') }}" alt="Activités" />
+                    </div>
+                    <div class="category-content">
+                        <div class="category-header">
+                            <div class="category-icon orange">
+                                <i class="fa-solid fa-calendar-days"></i>
+                            </div>
+                            <div class="category-info">
+                                <h3 class="category-name">Activités</h3>
+                                <p class="category-count">1000+ événements</p>
+                            </div>
+                        </div>
+                        <p class="category-description">
+                            Explorez les événements, activités culturelles et loisirs disponibles dans tous les arrondissements.
+                        </p>
+                        <a href="{{ path('app_activites') }}" class="discover-button orange">
+                            Découvrir
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">Pourquoi Choisir Paris Spots</h2>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="logo-container">
+                        <i class="fa-solid fa-users"></i>
+                    </div>
+                    <h3 class="feature-title">Communauté Active</h3>
+                    <p class="feature-description">
+                        Rejoignez des milliers de Parisiens qui découvrent leur ville
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="logo-container">
+                        <i class="fa-solid fa-earth-americas"></i>
+                    </div>
+                    <h3 class="feature-title">Données Actualisées</h3>
+                    <p class="feature-description">
+                        Informations mises à jour régulièrement par la Ville de Paris
+                    </p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="logo-container">
+                        <i class="fa-solid fa-shield"></i>
+                    </div>
+                    <h3 class="feature-title">Gratuit & Ouvert</h3>
+                    <p class="feature-description">
+                        Accès libre à toutes les fonctionnalités, sans inscription
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

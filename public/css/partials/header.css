@@ -1,0 +1,195 @@
+/* Header Styles */
+header {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    padding: 1rem 2rem;
+    z-index: 1000;
+    opacity: 0.98;
+}
+
+.header-container {
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.brand-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+/* Logo spécifique au header */
+.header-logo-container {
+    width: 55px;
+    height: 55px;
+    background: linear-gradient(135deg, #5f259f 0%, #8b5fbf 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(95, 37, 159, 0.3);
+}
+
+.header-logo-container span {
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.brand-text h1 {
+    background: linear-gradient(135deg, #5f259f 0%, #8b5fbf 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-size: 26px;
+    font-weight: bold;
+    margin: 0;
+}
+
+.brand-text span {
+    color: #666;
+    font-size: 12px;
+    display: block;
+    margin-top: 2px;
+}
+
+/* Navigation */
+.header-nav {
+    display: flex;
+    gap: 1rem;
+}
+
+.header-nav a {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 16px;
+    text-decoration: none;
+    color: #505050;
+    padding: 0.8rem 1.6rem;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 600;
+}
+
+.header-nav a:hover {
+    background-color: #f3f3f3;
+    color: #333;
+}
+
+.header-nav a.active {
+    color: #5f259f;
+    background-color: #f5ebff;
+}
+
+.header-nav a i {
+    font-size: 16px;
+}
+
+/* Menu hamburger */
+.header-menu-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    display: none;
+    padding: 0;
+    z-index: 999;
+}
+
+.header-menu-line {
+    fill: none;
+    stroke: #505050;
+    width: 20px;
+    stroke-width: 6;
+    transition: stroke-dasharray 600ms cubic-bezier(0.4, 0, 0.2, 1),
+    stroke-dashoffset 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.header-menu-line1 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+}
+
+.header-menu-line2 {
+    stroke-dasharray: 60 60;
+    stroke-width: 6;
+}
+
+.header-menu-line3 {
+    stroke-dasharray: 60 207;
+    stroke-width: 6;
+}
+
+.header-menu-button.opened .header-menu-line1 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 6;
+}
+
+.header-menu-button.opened .header-menu-line2 {
+    stroke-dasharray: 1 60;
+    stroke-dashoffset: -30;
+    stroke-width: 6;
+}
+
+.header-menu-button.opened .header-menu-line3 {
+    stroke-dasharray: 90 207;
+    stroke-dashoffset: -134;
+    stroke-width: 6;
+}
+
+/* Responsive */
+@media (max-width: 980px) {
+    .header-nav {
+        position: fixed;
+        top: 80px;
+        right: -100%;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0;
+        transition: right 0.4s ease-in-out;
+        z-index: 999;
+    }
+
+    .header-nav.open {
+        right: 0;
+    }
+
+    .header-menu-button {
+        display: flex !important;
+    }
+
+    .header-container{
+        padding: 0;
+    }
+
+    .header-nav a {
+        font-size: 22px;
+        padding: 1rem 2rem;
+        width: 100%;
+        text-align: center;
+    }
+    
+    .header-logo-container {
+        width: 50px;
+        height: 50px;
+    }
+    
+    .header-logo-container span {
+        font-size: 1.5rem;
+    }
+    
+    .brand-text h1 {
+        font-size: 1.5rem;
+    }
+}

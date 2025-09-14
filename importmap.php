@@ -25,4 +25,20 @@ return [
     '@hotwired/turbo' => [
         'version' => '7.3.0',
     ],
+    '@googlemaps/js-api-loader' => [
+        'version' => '1.16.10',
+    ],
+    '@symfony/ux-google-map' => [
+        'path' => './vendor/symfony/ux-google-map/assets/dist/map_controller.js',
+    ],
+    'leaflet' => [
+        'version' => '1.9.4',
+    ],
+    'leaflet/dist/leaflet.min.css' => [
+        'version' => '1.9.4',
+        'type' => 'css',
+    ],
+    '@symfony/ux-leaflet-map' => [
+        'path' => './vendor/symfony/ux-leaflet-map/assets/dist/map_controller.js',
+    ],
 ];

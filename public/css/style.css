@@ -1,0 +1,94 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+.turbo-progress-bar {
+  height: 4px;
+  background: linear-gradient(135deg, #5f259f 0%, #8b5fbf 100%);
+}
+
+select option {
+    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f0f0f0;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+    margin: 2rem 0;
+}
+
+.pagination {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.pagination span {
+    display: inline-block;
+}
+
+.pagination .current {
+    padding: 0.5rem 0.75rem;
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    color: #6b7280;
+    border-radius: 8px;
+    font-weight: 600;
+    min-width: 36px;
+    text-align: center;
+    border: 1px solid #d1d5db;
+}
+
+.pagination a {
+    display: inline-block;
+    padding: 0.5rem 0.75rem;
+    color: #6b7280;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    min-width: 36px;
+    text-align: center;
+    border: 1px solid transparent;
+}
+
+.pagination a:hover {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%);
+    color: #374151;
+    border-color: #d1d5db;
+    transform: translateY(-1px);
+}
+
+.pagination .previous a,
+.pagination .next a,
+.pagination .first a,
+.pagination .last a {
+    background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    border: 1px solid #e2e8f0;
+    font-weight: 600;
+}
+
+
+
+@media (max-width: 768px) {
+    .pagination {
+        padding: 0.75rem;
+        gap: 0.25rem;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    
+    .pagination a,
+    .pagination .current {
+        padding: 0.4rem 0.6rem;
+        font-size: 0.9rem;
+        min-width: 32px;
+    }
+}
